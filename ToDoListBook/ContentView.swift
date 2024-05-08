@@ -58,7 +58,7 @@ struct ContentView: View {
                         Text("Add")
                     })
                     .sheet(isPresented: $showAddTodoView, content: {
-                        AddTodoView(showAddTodoView: $showAddTodoView)
+                        AddTodoView(showAddTodoView: $showAddTodoView, todos: self.$todos)
                     })
                 }
                 ToolbarItem(placement: .topBarTrailing) {
