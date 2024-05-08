@@ -27,7 +27,8 @@ struct ContentView: View {
                     ) {
                         HStack {
                             Image(todo.category ?? "")
-                                .resizable().frame(width: 30, height: 30)
+                                .resizable()
+                                .frame(width: 30, height: 30)
                             Text(todo.name ?? "untitled")
                         }
                     }
@@ -42,12 +43,17 @@ struct ContentView: View {
             .navigationTitle("Todo Items")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(action: { showAddTodoView.toggle()}, label: {
-                        Text("Add")
-                    })
-                    .sheet(isPresented: $showAddTodoView, content: {
-                        AddTodoView(showAddTodoView: $showAddTodoView)
-                    })
+                    Button(
+                        action: { showAddTodoView.toggle()},
+                        label: {
+                            Text("Add")
+                        }
+                    )
+                    .sheet(
+                        isPresented: $showAddTodoView,
+                        content: {
+                            AddTodoView(showAddTodoView: $showAddTodoView)
+                        })
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
@@ -77,7 +83,6 @@ struct ContentView: View {
             let error = error as NSError
             fatalError("unresolved error: \(error)")
         }
-        
     }
 }
 

@@ -4,5 +4,4 @@
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="TodoCD1" representedClassName="TodoCD1" syncable="YES" codeGenerationType="class"/>
 </model>

@@ -22,30 +22,35 @@ struct AddTodoView: View {
             Text("Add Todo").font(.largeTitle)
             TextField("To Do name", text: $name)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .border(Color.black).padding()
+                .border(Color.black)
+                .padding()
             Text("Select Category")
             Picker("", selection: $selectedCategory) {
-                ForEach(0..<categoryTypes.count) {
+                ForEach(0..<categoryTypes.count, id: \.self) {
                     Text(categoryTypes[$0])
                 }
-            }.pickerStyle(SegmentedPickerStyle())
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            
             Spacer()
-            Button(action: {
-                showAddTodoView = false
-                let newTodoCD = TodoCD(context: viewContext)
-                newTodoCD.name = name
-                newTodoCD.category = categoryTypes[selectedCategory]
-                do {
-                    try viewContext.save()
+            
+            Button(
+                action: {
+                    showAddTodoView = false
+                    let newTodoCD = TodoCD(context: viewContext)
+                    newTodoCD.name = name
+                    newTodoCD.category = categoryTypes[selectedCategory]
+                    do {
+                        try viewContext.save()
+                    } catch {
+                        let error = error as NSError
+                        fatalError("unresolved error: \(error)")
+                    }
+                },
+                label: {
+                    Text("Done")
                 }
-                catch {
-                    let error = error as NSError
-                    fatalError("unresolved error: \(error)")
-                }
-            },
-                   label: {
-                Text("Done")
-            })
+            )
         }
         .padding()
     }
