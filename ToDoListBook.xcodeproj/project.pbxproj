@@ -13,6 +13,7 @@
 		BAA0A86E2BEB59E6007A750B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA0A86D2BEB59E6007A750B /* Preview Assets.xcassets */; };
 		BAA0A8762BEB5A14007A750B /* ToDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAA0A8742BEB5A14007A750B /* ToDo.xcdatamodeld */; };
 		BAA0A8782BEB5A7F007A750B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0A8772BEB5A7F007A750B /* Persistence.swift */; };
+		BAA0A87A2BEB7493007A750B /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0A8792BEB7493007A750B /* AddTodoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		BAA0A86D2BEB59E6007A750B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BAA0A8752BEB5A14007A750B /* ToDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDo.xcdatamodel; sourceTree = "<group>"; };
 		BAA0A8772BEB5A7F007A750B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		BAA0A8792BEB7493007A750B /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				BAA0A8662BEB59E4007A750B /* ToDoListBookApp.swift */,
 				BAA0A8682BEB59E4007A750B /* ContentView.swift */,
+				BAA0A8792BEB7493007A750B /* AddTodoView.swift */,
 				BAA0A8772BEB5A7F007A750B /* Persistence.swift */,
 				BAA0A8742BEB5A14007A750B /* ToDo.xcdatamodeld */,
 				BAA0A86A2BEB59E6007A750B /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 				BAA0A8782BEB5A7F007A750B /* Persistence.swift in Sources */,
 				BAA0A8762BEB5A14007A750B /* ToDo.xcdatamodeld in Sources */,
 				BAA0A8672BEB59E4007A750B /* ToDoListBookApp.swift in Sources */,
+				BAA0A87A2BEB7493007A750B /* AddTodoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

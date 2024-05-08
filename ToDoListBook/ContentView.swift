@@ -15,6 +15,7 @@ struct Todo: Identifiable {
 
 struct ContentView: View {
     
+    @State private var showAddTodoView = false
     @State private var todos = [
         Todo(name: "Write SwiftUI book", category: "work"),
         Todo(name: "Read Bible", category: "personal"),
@@ -52,13 +53,26 @@ struct ContentView: View {
             }
             .navigationTitle("Todo Items")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: { showAddTodoView.toggle()}, label: {
+                        Text("Add")
+                    })
+                    .sheet(isPresented: $showAddTodoView, content: {
+                        AddTodoView(showAddTodoView: $showAddTodoView)
+                    })
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
                 }
             }
         }
     }
+    
+    func addTodo() {
+        todos.append(Todo(name: "newTodo", category: "work"))
+    }
 }
+
 
 #Preview {
     ContentView()
