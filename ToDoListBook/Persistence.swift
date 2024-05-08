@@ -14,10 +14,10 @@ struct PersistentController {
     
     init() {
         container = NSPersistentContainer(name: "ToDo")
-        container.loadPersistentStores { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: {(storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("unresolved error: \(error)")
             }
-        }
+        })
     }
 }

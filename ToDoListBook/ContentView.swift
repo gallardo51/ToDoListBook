@@ -7,48 +7,36 @@
 
 import SwiftUI
 
-struct Todo: Identifiable {
-    let id = UUID()
-    let name: String
-    let category: String
-}
-
 struct ContentView: View {
     
     @State private var showAddTodoView = false
-    @State private var todos = [
-        Todo(name: "Write SwiftUI book", category: "work"),
-        Todo(name: "Read Bible", category: "personal"),
-        Todo(name: "Bring kids out to play", category: "family"),
-        Todo(name: "Fetch wife", category: "family"),
-        Todo(name: "family", category: "Call mum")]
-    //    @Environment(\.managedObjectContext) private var viewContext
-    //    @FetchRequest(sortDescriptors: []) private var todosCD: FetchedResults<TodoCD>
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \TodoCD.name, ascending: false)]) private var todosCD: FetchedResults<TodoCD>
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(todos, id: \.name) { (todo) in
+                ForEach(todosCD, id: \.self) { todo in
                     NavigationLink(destination:
                                     VStack {
-                        Text(todo.name)
-                        Image(todo.category)
+                        Text(todo.name ?? "untitled")
+                        Image(todo.category ?? "")
                             .resizable()
                             .frame(width: 200, height: 200)
                     }
                     ) {
                         HStack {
-                            Image(todo.category)
+                            Image(todo.category ?? "")
                                 .resizable().frame(width: 30, height: 30)
-                            Text(todo.name)
+                            Text(todo.name ?? "untitled")
                         }
                     }
+                    .onLongPressGesture(perform: {
+                        updateTodo(todo: todo)
+                    })
                 }
                 .onDelete(perform: { indexSet in
-                    todos.remove(atOffsets: indexSet)
-                })
-                .onMove(perform: { indices, newOffset in
-                    todos.move(fromOffsets: indices, toOffset: newOffset)
+                    deleteTodo(offsets: indexSet)
                 })
             }
             .navigationTitle("Todo Items")
@@ -58,7 +46,7 @@ struct ContentView: View {
                         Text("Add")
                     })
                     .sheet(isPresented: $showAddTodoView, content: {
-                        AddTodoView(showAddTodoView: $showAddTodoView, todos: self.$todos)
+                        AddTodoView(showAddTodoView: $showAddTodoView)
                     })
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -68,8 +56,28 @@ struct ContentView: View {
         }
     }
     
-    func addTodo() {
-        todos.append(Todo(name: "newTodo", category: "work"))
+    private func deleteTodo(offsets: IndexSet) {
+        for index in offsets {
+            let todo = todosCD[index]
+            viewContext.delete(todo)
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            let error = error as NSError
+            fatalError("unresolved error: \(error)")
+        }
+    }
+    
+    private func updateTodo(todo: FetchedResults<TodoCD>.Element) {
+        todo.name = "😀"
+        do {
+            try viewContext.save()
+        } catch {
+            let error = error as NSError
+            fatalError("unresolved error: \(error)")
+        }
+        
     }
 }
 

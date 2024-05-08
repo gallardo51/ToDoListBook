@@ -9,13 +9,13 @@ import SwiftUI
 
 struct AddTodoView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var showAddTodoView: Bool
     
     @State private var name: String = ""
     @State private var selectedCategory = 0
     var categoryTypes = ["family", "personal", "work"]
-    
-    @Binding var todos: [Todo]
     
     var body: some View {
         VStack {
@@ -32,7 +32,16 @@ struct AddTodoView: View {
             Spacer()
             Button(action: {
                 showAddTodoView = false
-                todos.append((Todo(name: name, category: categoryTypes[selectedCategory])))
+                let newTodoCD = TodoCD(context: viewContext)
+                newTodoCD.name = name
+                newTodoCD.category = categoryTypes[selectedCategory]
+                do {
+                    try viewContext.save()
+                }
+                catch {
+                    let error = error as NSError
+                    fatalError("unresolved error: \(error)")
+                }
             },
                    label: {
                 Text("Done")
@@ -43,5 +52,5 @@ struct AddTodoView: View {
 }
 
 #Preview {
-    AddTodoView(showAddTodoView: .constant(false), todos: .constant([]))
+    AddTodoView(showAddTodoView: .constant(false))
 }
