@@ -7,15 +7,56 @@
 
 import SwiftUI
 
+struct Todo: Identifiable {
+    let id = UUID()
+    let name: String
+    let category: String
+}
+
 struct ContentView: View {
+    
+    @State private var todos = [
+        Todo(name: "Write SwiftUI book", category: "work"),
+        Todo(name: "Read Bible", category: "personal"),
+        Todo(name: "Bring kids out to play", category: "family"),
+        Todo(name: "Fetch wife", category: "family"),
+        Todo(name: "family", category: "Call mum")]
+    //    @Environment(\.managedObjectContext) private var viewContext
+    //    @FetchRequest(sortDescriptors: []) private var todosCD: FetchedResults<TodoCD>
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                ForEach(todos, id: \.name) { (todo) in
+                    NavigationLink(destination:
+                                    VStack {
+                        Text(todo.name)
+                        Image(todo.category)
+                            .resizable()
+                            .frame(width: 200, height: 200)
+                    }
+                    ) {
+                        HStack {
+                            Image(todo.category)
+                                .resizable().frame(width: 30, height: 30)
+                            Text(todo.name)
+                        }
+                    }
+                }
+                .onDelete(perform: { indexSet in
+                    todos.remove(atOffsets: indexSet)
+                })
+                .onMove(perform: { indices, newOffset in
+                    todos.move(fromOffsets: indices, toOffset: newOffset)
+                })
+            }
+            .navigationTitle("Todo Items")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    EditButton()
+                }
+            }
         }
-        .padding()
     }
 }
 
